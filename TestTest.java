@@ -27,125 +27,53 @@ class TestTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Проверка текста суммы платежа с внесенным платежем в монадальном окне блока Услуга связи ")
+    @DisplayName("Проверка текста суммы платежа с внесенным платежем, номера телефона с введенным телефоном, Оплатить 100.00 BYN на кнопке подтверждения в монадальном окне блока Услуга связи ")
     @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void SummText(String phoneNumber, String sum, String email) {
+    void SummNumberText(String phoneNumber, String sum, String email) {
         testPage = new TestPage(driver);
         testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "100.00 BYN";
-        String actual = testPage.getCostNumber().getText();
-        assertEquals(expected, actual, "Сумма платежа не совпадает с описанием");
+        String expectedSumm = "100.00 BYN";
+        String actualSumm = testPage.getCostNumber().getText();
+        assertEquals(expectedSumm, actualSumm, "Сумма платежа не совпадает с описанием");
+        String expectedNumber = "Номер:375297777777";
+        String actualNumber = testPage.getPhoneNumber().getText();
+        assertEquals(expectedNumber, actualNumber, "Номер телефона не совпадает с описанием");
+        String expectedButtontext = "Оплатить 100.00 BYN";
+        String actualButtontext = testPage.getButtontextPrice().getText();
+        assertEquals(expectedButtontext, actualButtontext, "Текст 'Оплатить 100.00 BYN' не совпадает с описанием");
     }
 
     @ParameterizedTest
-    @DisplayName("Проверка текста номера телефона с введенным телефоном в монадальном окне блока Услуга связи ")
+    @DisplayName("Проверка плейсхолдеров в монадальном окне блока Услуга связи ")
     @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void NumberText(String phoneNumber, String sum, String email) {
+    void Placeholders(String phoneNumber, String sum, String email) {
         testPage = new TestPage(driver);
         testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "Номер:375297777777";
-        String actual = testPage.getPhoneNumber().getText();
-        assertEquals(expected, actual, "Номер телефона не совпадает с описанием");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка плейсхолдера Номер карты в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void CardNumber(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "Номер карты";
-        String actual = testPage.getCardNumberPlaceholder().getText();
-        assertEquals(expected, actual, "Номер карты не совпадает с описанием");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка плейсхолдера Срок действия в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void Validity(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "Срок действия";
-        String actual = testPage.getValidityPlaceholder().getText();
-        assertEquals(expected, actual, "Срок действия не совпадает с описанием");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка плейсхолдера CVC в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void Cvc(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "CVC";
-        String actual = testPage.getCvc().getText();
-        assertEquals(expected, actual, "CVC не совпадает с описанием");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка плейсхолдера Имя держателя (как на карте) в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void NameCard(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "Имя держателя (как на карте)";
-        String actual = testPage.getNamecard().getText();
-        assertEquals(expected, actual, "Имя держателя (как на карте) не совпадает с описанием");
+        String expectedNumbercard = "Номер карты";
+        String actualNumbercard = testPage.getCardNumberPlaceholder().getText();
+        assertEquals(expectedNumbercard, actualNumbercard, "Номер карты не совпадает с описанием");
+        String expectedValidity = "Срок действия";
+        String actualValidity = testPage.getValidityPlaceholder().getText();
+        assertEquals(expectedValidity, actualValidity, "Срок действия не совпадает с описанием");
+        String expectedCvc = "CVC";
+        String actualCvc = testPage.getCvc().getText();
+        assertEquals(expectedCvc, actualCvc, "CVC не совпадает с описанием");
+        String expectedNameCard = "Имя держателя (как на карте)";
+        String actualNameCard = testPage.getNamecard().getText();
+        assertEquals(expectedNameCard, actualNameCard, "Имя держателя (как на карте) не совпадает с описанием");
     }
 
     @ParameterizedTest
     @DisplayName("Проверка лого MasterCard в монадальном окне блока Услуга связи ")
     @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void logoMastecard(String phoneNumber, String sum, String email) {
+    void logo(String phoneNumber, String sum, String email) {
         testPage = new TestPage(driver);
         testPage.enterDataAndContinue(phoneNumber, sum, email);
         assertTrue(testPage.getImgMasterCard().isDisplayed(), "Лого MasterCard не отображается");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка лого Visa в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void logoVisa(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
         assertTrue(testPage.getImgVisa().isDisplayed(), "Лого Visa не отображается");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка лого Belcart в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void logoBelcart(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
         assertTrue(testPage.getImgBelcart().isDisplayed(), "Лого Belcart не отображается");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка лого Mir в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void logoMir(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
         assertTrue(testPage.getImgmir().isDisplayed(), "Лого Mir не отображается");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка лого Maestro в монадальном окне блока Услуга связи ")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void logoMaestro(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
         assertTrue(testPage.getImgMaestro().isDisplayed(), "Лого Maestro не отображается");
-    }
-
-    @ParameterizedTest
-    @DisplayName("Проверка текста Оплатить 100.00 BYN на кнопке подтверждения в монадальном окне блока Услуга связи")
-    @CsvSource({"297777777, 100, 1nik1996@mail.ru"})
-    void Buttontext(String phoneNumber, String sum, String email) {
-        testPage = new TestPage(driver);
-        testPage.enterDataAndContinue(phoneNumber, sum, email);
-        String expected = "Оплатить 100.00 BYN";
-        String actual = testPage.getButtontextPrice().getText();
-        assertEquals(expected, actual, "Текст 'Оплатить 100.00 BYN' не совпадает с описанием");
     }
 
     @AfterAll
